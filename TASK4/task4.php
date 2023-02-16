@@ -53,7 +53,7 @@ class student
         }
         echo "</table>";
     }
-    function display_contact(){
+    function display_contact(){//show phone number of student
         echo 'Phone no :'. $this->contact;
     }
 }
