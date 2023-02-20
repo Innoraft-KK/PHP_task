@@ -20,11 +20,14 @@ class student
     function message()
     { //name related message
         if (!preg_match('/^[a-zA-Z]+$/', $this->fname)) {
-            echo "Invalid Input in First Name \n";
+            echo "Invalid Input in First Name";
+            echo "<br/>";
         } elseif (!preg_match('/^[a-zA-Z]+$/', $this->lname)) {
-            echo "Invalid Input in Last Name \n";
+            echo "Invalid Input in Last Name";
+            echo "<br/>";
         } else {
             echo "Hello " . $this->fullname;
+            echo "<br/>";
         }
     }
 
@@ -32,10 +35,12 @@ class student
     { //image related message
         echo (move_uploaded_file($this->img_temp, "upload-images/" . $this->img));
         if (move_uploaded_file($this->img_temp, "upload-images/" . $this->img)) {
-            echo "<br> Successfully uploaded";
+            echo "Successfully uploaded";
+            echo "<br/>";
             echo "<img src='./upload-images/" . $this->img . "'>";
         } else {
             echo "<br> Could not upload the file";
+            echo "<br/>";
         }
     }
     function subject_marks()
@@ -66,32 +71,40 @@ class student
     }
     function display_contact()
     { //show phone number of student
-        echo 'Phone no :' . $this->contact;
+        echo 'Phone no : ' . $this->contact;
+        echo "<br/>";
     }
 
-    /* function validate_email(){
-        // Set API endpoint and access key
-    
-    // Set email address to be verified
-    $access_key = 'xN6Jui1sQyIFRpLwt23pzaCFIPuJWOtc';
-    // set email address
-    $email_address = $this->email;
-    
-    $ch = curl_init('https://apilayer.net/api/check?access_key='.$access_key.'&email='.$email_address.'');  
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    
-    // Receive the data:
-    $json = curl_exec($ch);
-    curl_close($ch);
-    
-    // Decode JSON response:
-    $validationResult = json_decode($json, true);
-    if ($validationResult['format_valid'] && $validationResult['smtp_check']) {
-        echo "Email is valid";
-    } else {
-        echo "Email is not valid";
+    function validate_email(){
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://api.apilayer.com/email_verification/check?email=$this->email",
+          CURLOPT_HTTPHEADER => array(
+            "Content-Type: text/plain",
+            "apikey: xN6Jui1sQyIFRpLwt23pzaCFIPuJWOtc"
+          ),
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET"
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        // echo $response;
+        // Decode JSON response:
+        $validationResult = json_decode($response, true);
+        if ($validationResult['format_valid'] && $validationResult['smtp_check']) {
+            echo "Email is valid: ".$this->email;
+            echo "<br/>";
+        } else {
+            echo "Email is not valid: ".$this->email;
+            echo "<br/>";
+        }   
     }
-        } */
+
     function create_Doc()
     {
         $doc_name = "Doc_file/" . $this->fname . "_" . $this->lname . ".doc";
@@ -112,10 +125,9 @@ class student
             $txt = " ".$sub . " | " . $mark. "\n" ;
             fwrite($my_file, $txt);
         }
-        /*  $txt="\n Email :" . $this->email.""; */
-        /*  fwrite($my_file,$txt); */
+        $txt="\nEmail :" . $this->email;
+        fwrite($my_file,$txt);
         fclose($my_file);
-
         echo "<a download=" . $this->fname . "_" . $this->lname . " href=" . $doc_name . ">Click here to download all information</a>";
     }
 }
@@ -144,8 +156,10 @@ if (!empty($_POST['first_name']) and !empty($_POST['last_name'])) {
     if (isset($phone_no)) {
         $stud->display_contact();
     }
-    $stud->create_Doc();
-    /*  if(isset($eMail)){
+    
+    if(isset($eMail)){
         $stud->validate_email();
-    } */
+    }
+    
+    $stud->create_Doc();
 }

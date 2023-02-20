@@ -1,7 +1,6 @@
     <?php error_reporting(0); ?>
     <!DOCTYPE html>
     <html lang="en">
-
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,10 +34,10 @@
                 <label for="phone">Phone No</label>
                 <input type="text" id="phone" name="phone" value="+91" pattern="^\+91\d{10}$">
             </div>
-            <!-- <div>
+            <div>
                 <label for="email">Email</label>
                 <input type="text" id="email" name="email" >
-            </div> -->
+            </div>
             <input type="submit">
             <br />
             <!-- php file included -->
