@@ -1,9 +1,61 @@
 <?php
-/* student class created */
+/**
+ * Represents a student with a first name, last name, image, marks, and contact information.
+ */
 class student
 {
 
-    public $fname, $lname, $fullname, $img, $img_temp, $marks,$contact,$email;
+    /**
+     * @var string The student's first name.
+     */
+    public $fname;
+
+    /**
+     * @var string The student's last name.
+     */
+    public $lname;
+
+    /**
+     * @var string The student's full name.
+     */
+    public $fullname;
+
+    /**
+     * @var string The name of the student's image file.
+     */
+    public $img;
+
+    /**
+     * @var string The temporary location of the student's image file.
+     */
+    public $img_temp;
+
+    /**
+     * @var string The student's marks in each subject, separated by newlines and pipe symbols.
+     */
+    public $marks;
+
+    /**
+     * @var string The student's contact phone number.
+     */
+    public $contact;
+
+    /**
+     * @var string The student's email address.
+     */
+    public $email;
+
+    /**
+     * Creates a new student with the given information.
+     *
+     * @param string $first The student's first name.
+     * @param string $last The student's last name.
+     * @param string $img_name The name of the student's image file.
+     * @param string $img_t The temporary location of the student's image file.
+     * @param string $mark_area The student's marks in each subject, separated by newlines and pipe symbols.
+     * @param string $p_no The student's contact phone number.
+     * @param string $eMail The student's email address.
+     */
 
     function __construct($first, $last, $img_name, $img_t, $mark_area,$p_no,$eMail)
     {
@@ -16,7 +68,9 @@ class student
         $this->contact = $p_no;
         $this->email=$eMail;
     }
-
+    /**
+     * Displays a message that includes the student's full name.
+     */
     function message()
     { //name related message
         if (!preg_match('/^[a-zA-Z]+$/', $this->fname)) {
@@ -27,7 +81,10 @@ class student
             echo "Hello " . $this->fullname;
         }
     }
-
+     /**
+     * Displays a message indicating whether the student's image was successfully uploaded.
+     * If successful, also displays the uploaded image.
+     */
     function img_msg()
     { //image related message
         echo(move_uploaded_file($this->img_temp, "upload-images/" . $this->img));
@@ -38,6 +95,9 @@ class student
             echo "<br> Could not upload the file";
         }
     }
+     /**
+     * Generates an HTML table displaying the student's marks in each subject.
+     */
     function mark_table()
     { //mark table generator
         $sub_mark = explode("\n", $this->marks);
@@ -46,7 +106,6 @@ class student
                         <th>Subject</th>
                         <th>Marks</th>
                     </tr>";
-
         foreach ($sub_mark as $value) {
             $sub = explode('|', $value)[0];
             $mark = explode('|', $value)[1];
@@ -54,10 +113,16 @@ class student
         }
         echo "</table>";
     }
-    function display_contact(){//show phone number of student
+     /**
+     * Displays the phone number of the student.
+     */
+    function display_contact(){
         echo 'Phone no :'. $this->contact;
         echo "<br>";
     }
+     /**
+     * Validates the email of the student using an external API.
+     */
     function validate_email(){
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -86,7 +151,7 @@ class student
         }   
     }
 }
-/* student object initiated if first and last name are entered*/
+/* student object initiated */
 if (!empty($_POST['first_name']) and !empty($_POST['last_name'])) {
     $f = $_POST['first_name'];
     $l = $_POST['last_name'];
@@ -115,3 +180,4 @@ if (!empty($_POST['first_name']) and !empty($_POST['last_name'])) {
     {$stud->validate_email();}
    
 }
+?>
