@@ -1,10 +1,65 @@
 <?php
-/* student class created */
+/**
+ * Class student represents a student with their personal information and marks.
+ */
 class student
 {
+     /**
+     * @var string The first name of the student.
+     */
+    public $fname;
+    
+    /**
+     * @var string The last name of the student.
+     */
+    public $lname;
+    
+    /**
+     * @var string The full name of the student (concatenation of first and last name).
+     */
+    public $fullname;
+    
+    /**
+     * @var string The name of the student's image file.
+     */
+    public $img;
+    
+    /**
+     * @var string The temporary location of the student's image file.
+     */
+    public $img_temp;
+    
+    /**
+     * @var string The marks obtained by the student in each subject.
+     */
+    public $marks;
+    
+    /**
+     * @var string The contact number of the student.
+     */
+    public $contact;
+    
+    /**
+     * @var string The email address of the student.
+     */
+    public $email;
+    
+    /**
+     * @var string The location where the student's document will be saved.
+     */
+    public $doc_loc;
 
-    public $fname, $lname, $fullname, $img, $img_temp, $marks, $contact, $email, $doc_loc;
-
+    /**
+     * student constructor.
+     *
+     * @param string $first The first name of the student.
+     * @param string $last The last name of the student.
+     * @param string $img_name The name of the student's image file.
+     * @param string $img_t The temporary location of the student's image file.
+     * @param string $mark_area The marks obtained by the student in each subject.
+     * @param string $p_no The contact number of the student.
+     * @param string $eMail The email address of the student.
+     */
     function __construct($first, $last, $img_name, $img_t, $mark_area, $p_no, $eMail)
     {
         $this->fname = $first;
@@ -16,9 +71,11 @@ class student
         $this->contact = $p_no;
         $this->email = $eMail;
     }
-
+     /**
+     * Displays a name-related message for the student.
+     */
     function message()
-    { //name related message
+    { 
         if (!preg_match('/^[a-zA-Z]+$/', $this->fname)) {
             echo "Invalid Input in First Name";
             echo "<br/>";
@@ -30,9 +87,10 @@ class student
             echo "<br/>";
         }
     }
-
-    function img_msg()
-    { //image related message
+    /**
+     * Displays an image-related message for the student.
+     */
+    function img_msg(){
         echo (move_uploaded_file($this->img_temp, "upload-images/" . $this->img));
         if (move_uploaded_file($this->img_temp, "upload-images/" . $this->img)) {
             echo "Successfully uploaded";
@@ -43,6 +101,11 @@ class student
             echo "<br/>";
         }
     }
+    /**
+     * Parse the marks string and return an associative array of subject marks.
+     *
+     * @return array An associative array of subject marks with the subject name as key and mark as value.
+     */
     function subject_marks()
     {
         $sub_mark = explode("\n", $this->marks);
@@ -54,9 +117,13 @@ class student
         }
         return $mark_arr;
     }
+    /**
+     * Display a table of subject marks for the student.
+     *
+     * @return void
+     */
     function mark_table()
-    { //mark table generator
-        //$sub_mark = explode("\n", $this->marks);
+    { 
         echo "<table border=1>
                     <tr>
                         <th>Subject</th>
@@ -68,13 +135,21 @@ class student
             echo "<tr><td>$sub</td><td>$mark</td></tr>";
         }
         echo "</table>";
-    }
-    function display_contact()
-    { //show phone number of student
+        }
+        /**
+     * Display the phone number of the student.
+     *
+     * @return void
+     */
+    function display_contact(){
         echo 'Phone no : ' . $this->contact;
         echo "<br/>";
     }
-
+    /**
+     * Validate the email address of the student using an email verification API.
+     *
+     * @return void
+     */
     function validate_email(){
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -104,7 +179,10 @@ class student
             echo "<br/>";
         }   
     }
-
+    /**
+    * Creates a Word document file containing the student's information.
+    * @return void
+    */
     function create_Doc()
     {
         $doc_name = "Doc_file/" . $this->fname . "_" . $this->lname . ".doc";
@@ -131,7 +209,9 @@ class student
         echo "<a download=" . $this->fname . "_" . $this->lname . " href=" . $doc_name . ">Click here to download all information</a>";
     }
 }
-/* student object initiated if first and last name are entered*/
+/** 
+* student object initiated 
+*/
 if (!empty($_POST['first_name']) and !empty($_POST['last_name'])) {
     $f = $_POST['first_name'];
     $l = $_POST['last_name'];
@@ -163,3 +243,4 @@ if (!empty($_POST['first_name']) and !empty($_POST['last_name'])) {
     
     $stud->create_Doc();
 }
+?>
