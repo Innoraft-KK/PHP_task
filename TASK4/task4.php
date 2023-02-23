@@ -4,7 +4,16 @@ class student
 {
 
     public $fname, $lname, $fullname, $img, $img_temp, $marks,$contact;
-
+    /**
+    * Constructor method for the student class.
+    *
+    * @param string $first First name of the student.
+    * @param string $last Last name of the student.
+    * @param string $img_name Image name of the student.
+    * @param string $img_t Image temporary location of the student.
+    * @param string $mark_area Marks obtained by the student.
+    * @param string $p_no Contact number of the student.
+    */
     function __construct($first, $last, $img_name, $img_t, $mark_area,$p_no)
     {
         $this->fname = $first;
@@ -15,9 +24,10 @@ class student
         $this->marks = $mark_area;
         $this->contact = $p_no;
     }
-
-    function message()
-    { //name related message
+    /**
+    * Method to display a message based on the student's name.
+    */
+    function message(){ 
         if (!preg_match('/^[a-zA-Z]+$/', $this->fname)) {
             echo "Invalid Input in First Name \n";
         } elseif (!preg_match('/^[a-zA-Z]+$/', $this->lname)) {
@@ -26,7 +36,9 @@ class student
             echo "Hello " . $this->fullname;
         }
     }
-
+    /**
+    * Method to display a message and upload the student's image.
+    */
     function img_msg()
     { //image related message
         echo(move_uploaded_file($this->img_temp, "upload-images/" . $this->img));
@@ -37,6 +49,9 @@ class student
             echo "<br> Could not upload the file";
         }
     }
+    /**
+     * Method to generate a mark table.
+     */
     function mark_table()
     { //mark table generator
         $sub_mark = explode("\n", $this->marks);
@@ -53,11 +68,14 @@ class student
         }
         echo "</table>";
     }
-    function display_contact(){//show phone number of student
+    /**
+     * Method to display the contact number of the student
+    */
+    function display_contact(){
         echo 'Phone no :'. $this->contact;
     }
 }
-/* student object initiated if first and last name are entered*/
+/* Student object initiated if first and last name are entered */
 if (!empty($_POST['first_name']) and !empty($_POST['last_name'])) {
     $f = $_POST['first_name'];
     $l = $_POST['last_name'];
@@ -82,3 +100,4 @@ if (!empty($_POST['first_name']) and !empty($_POST['last_name'])) {
         $stud->display_contact();
     }
 }
+?>
