@@ -1,9 +1,37 @@
 <?php
-/* student class created */
+/**
+ * Represents a student with a first name, last name, image, and marks.
+ */
 class student{
 
-        public $fname,$lname,$fullname,$img,$img_temp,$marks;
-
+        /** @var string $fname The student's first name. */
+    public $fname;
+    
+    /** @var string $lname The student's last name. */
+    public $lname;
+    
+    /** @var string $fullname The student's full name. */
+    public $fullname;
+    
+    /** @var string $img The name of the student's image. */
+    public $img;
+    
+    /** @var string $img_temp The temporary path of the student's image. */
+    public $img_temp;
+    
+    /** @var string $marks The student's marks. */
+    public $marks;
+    
+    /**
+     * Initializes a new instance of the student class.
+     *
+     * @param string $first The student's first name.
+     * @param string $last The student's last name.
+     * @param string $img_name The name of the student's image.
+     * @param string $img_t The temporary path of the student's image.
+     * @param string $mark_area The student's marks.
+     */
+        
         function __construct($first,$last,$img_name,$img_t,$mark_area){
             $this->fname = $first;
             $this->lname = $last;
@@ -12,8 +40,11 @@ class student{
             $this->img_temp=$img_t;
             $this->marks=$mark_area;
         }
-
-        function message(){ //name related message
+        /**
+        * Displays a message related to the student's name.
+        * @return void
+        */
+        function message(){ 
             if (!preg_match('/^[a-zA-Z]+$/', $this->fname)){
                 echo "Invalid Input in First Name";
             } 
@@ -24,8 +55,11 @@ class student{
                 echo "Hello ".$this->fullname;
             }
         }
-
-        function img_msg(){//image related message
+         /**
+        * Displays a message related to the student's image.
+        * @return void
+        */
+        function img_msg(){
                 if(move_uploaded_file($this->img_temp,"upload-images/".$this->img)){
                     echo "<br> Successfully uploaded";
                     echo "<img src='./upload-images/".$this->img."'>";
@@ -34,7 +68,11 @@ class student{
                     echo "Could not upload the file";
                 }
             }
-        function mark_table(){//mark table generator
+         /**
+        * Displays a table of the student's marks.
+        * @return void
+        */
+        function mark_table(){
             $sub_mark = explode("\n",$this->marks);
             echo "<table border=1>
                     <tr>
