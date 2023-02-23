@@ -1,4 +1,11 @@
 <?php
+    /**
+     * Start a session and check if the user is authenticated, redirect to login page if not.
+     * Logout user if requested and redirect to index page.
+     * Get task number from query parameter and redirect to respective task form page, or display error message if query parameter is invalid.
+     *
+     * @return void
+     */
     session_start();
     if (!isset($_SESSION["user_name"])) {
         header("Location: index.php?msg=login");
