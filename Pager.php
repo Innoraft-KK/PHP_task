@@ -8,12 +8,12 @@
 </head>
 <body>
     <ul>
-        <li><a href="Task1.php?task=1">Task 1</a></li>
-        <li><a href="Task2.php?task=2">Task 2</a></li>
-        <li><a href="Task3.php?task=3">Task 3</a></li>
-        <li><a href="Task4.php?task=4">Task 4</a></li>
-        <li><a href="Task5.php?task=5">Task 5</a></li>
-        <li><a href="Task6.php?task=6">Task 6</a></li>
+        <li><a href="Pager.php?form=1">Task 1</a></li>
+        <li><a href="Pager.php?form=2">Task 2</a></li>
+        <li><a href="Pager.php?form=3">Task 3</a></li>
+        <li><a href="Pager.php?form=4">Task 4</a></li>
+        <li><a href="Pager.php?form=5">Task 5</a></li>
+        <li><a href="Pager.php?form=6">Task 6</a></li>
     </ul>
     <form method="post">
         <input type="submit" value="Log Out" name="logout">

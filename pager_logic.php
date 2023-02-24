@@ -17,13 +17,10 @@
         header("Location: index.php");
     }
     if(isset($_GET['task'])){
-        $task=$_GET['task'];
-        if($task>0 || $task<7){
-            $loc='./TASK'.$task.'./form'.$task.'php';
+        $form=$_GET['form'];
+        if($form>0 and  $form<7){
+            $loc='Location: TASK'.$form.'/form'.$form.'.php';
             header($loc);
-        }
-        else{
-            echo "Wrong Query";
         }
     }
 ?>
