@@ -1,10 +1,28 @@
-/**
- * Updates a full name field with the combined values of a first and last name field.
- * 
- * @returns {void}
- */
-function updateFullName(){
-let fname=document.getElementById("first_name").value;
-let lname=document.getElementById("last_name").value;
-document.getElementById("full_name").value=fname.concat(" ",lname);
+const form = document.querySelector('form');_
+const firstNameInput = document.querySelector('#first_name');
+const lastNameInput = document.querySelector('#last_name');
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const firstName = firstNameInput.value.trim();
+  const lastName = lastNameInput.value.trim();
+
+  const firstNamePattern = /^[A-Za-z]+$/;
+  const lastNamePattern = /^[A-Za-z]+$/;
+
+  if (!firstNamePattern.test(firstName)) {
+    alert('First name should contain only alphabets');
+    firstNameInput.focus();
+    return;
+  }
+  if (!lastNamePattern.test(lastName)) {
+    alert('Last name should contain only alphabets');
+    lastNameInput.focus();
+    return;
+  }
+  form.submit();
+});
+function updateFullName() {
+  var firstName = document.getElementById("first_name").value;
+  var lastName = document.getElementById("last_name").value;
+  document.getElementById("fullName").value = firstName + " " + lastName;
 }
