@@ -1,12 +1,5 @@
 <?php
-/**
-* Start a session and authenticate user credentials
-* @param string $username The username to authenticate
-* @param string $pass The password to authenticate
-* @return void
-*/
 session_start();
-
 $username='kaaarrrtik';
 $pass='innoraft';
 
@@ -39,5 +32,6 @@ if(isset($_POST['user_name']) && isset($_POST['password'])){
     else{
         echo "Invalid username or password";
     }
-}
+} 
+ 
 ?> 
