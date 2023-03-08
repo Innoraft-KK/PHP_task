@@ -16,11 +16,14 @@
         session_destroy();
         header("Location: index.php");
     }
-    if(isset($_GET['task'])){
+    if(isset($_GET['form'])){
         $form=$_GET['form'];
         if($form>0 and  $form<7){
-            $loc='Location: TASK'.$form.'/form'.$form.'.php';
-            header($loc);
+            echo "<h2 style='
+            margin: 50px 0 0 0;
+        '>Task $form</h2>";
+            $loc='TASK'.$form.'/form'.$form.'.php';
+            include_once $loc;
         }
     }
 ?>
