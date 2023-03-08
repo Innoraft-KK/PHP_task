@@ -95,7 +95,7 @@ class student
         if (move_uploaded_file($this->img_temp, "upload-images/" . $this->img)) {
             echo "Successfully uploaded";
             echo "<br/>";
-            echo "<img src='./upload-images/" . $this->img . "'>";
+            echo "<img src='upload-images/" . $this->img . "'>";
         } else {
             echo "<br> Could not upload the file";
             echo "<br/>";
@@ -185,7 +185,7 @@ class student
     */
     function create_Doc()
     {
-        $doc_name = "Doc_file/" . $this->fname . "_" . $this->lname . ".doc";
+        $doc_name = "Doc_file/" . $this->fname . "_" . $this->lname . ".docx";
         $my_file = fopen($doc_name, 'w') or die('Unable to open file!');
         $txt = "First Name :" . $this->fname."\n";
         fwrite($my_file, $txt);
@@ -193,8 +193,6 @@ class student
         fwrite($my_file, $txt);
         $txt = "Full Name :" . $this->fname . " " . $this->lname."\n" ;
         fwrite($my_file, $txt);
-        /* $txt= "<img src="./upload-images/" . $this->img . "">"
-        fwrite($my_file,$txt); */
         $txt = "Phone No. :" . $this->contact."\n" ;
         fwrite($my_file, $txt);
         $txt = "Subject | Marks" ."\n";
@@ -206,7 +204,22 @@ class student
         $txt="\nEmail :" . $this->email;
         fwrite($my_file,$txt);
         fclose($my_file);
-        echo "<a download=" . $this->fname . "_" . $this->lname . " href=" . $doc_name . ">Click here to download all information</a>";
+
+        if (file_exists($doc_name)) {
+            // Set the headers to trigger a download
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($doc_name) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($doc_name));
+            // Output the file content
+            readfile($doc_name);
+        } else {
+            echo "Not Found.";
+        }
+        //echo "<a download=" . $this->fname . "_" . $this->lname . " href=" . $doc_name . ">Click here to download all information</a>";
     }
 }
 /** 
@@ -240,7 +253,9 @@ if (!empty($_POST['first_name']) and !empty($_POST['last_name'])) {
     if(isset($eMail)){
         $stud->validate_email();
     }
+    if(($_SERVER["REQUEST_METHOD"] == "POST")){
+        $stud->create_Doc();
+        }
     
-    $stud->create_Doc();
 }
 ?>
