@@ -1,4 +1,4 @@
-    <?php error_reporting(0); ?>
+<?php error_reporting(0); ?>
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -13,17 +13,17 @@
         <form method="post" enctype="multipart/form-data">
             <div>
                 <label for="first_name">First Name</label>
-                <input type="text" id="first_name" name="first_name" required onchange="updateFullName()"><br>
+                <input type="text" id="first_name" name="first_name" required oninput="updateFullName()"><br>
             </div>
             <div>
                 <label for="last_name">Last Name</label>
-                <input type="text" id="last_name" name="last_name" required onchange="updateFullName()"><br>
+                <input type="text" id="last_name" name="last_name" required oninput="updateFullName()"><br>
             </div>
             <div>
                 <label for="full_name">Full Name</label>
                 <input type="text" id="full_name" readonly="/readonly"><br />
             </div>
-            <div><input type="file" name="image"></div>
+            <div><input type="file" name="image" accept=".png,.gif,.jpeg"></div>
             <div>
                 <textarea name="sub-mark" id="sub-mark" cols="30" rows="10">
                 </textarea>
@@ -39,7 +39,7 @@
                 <input type="text" id="email" name="email" >
             </div>
             <input type="submit">
-            <br />
+            <br/>
             <!-- php file included -->
             <?php include("task6.php"); ?>
         </form>
